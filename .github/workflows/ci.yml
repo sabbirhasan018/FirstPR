@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: this workflow only ever reads the repository.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Type check, lint, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      - run: npm test
+
+      # The build is part of CI because two real defects in this project's
+      # history were only visible at build time, not from tests.
+      - run: npm run build
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Deliberately a plain grep over tracked files rather than an action:
+      # it needs no third-party trust and no token, and the patterns are the
+      # same ones PR Preflight applies locally.
+      - name: Scan tracked files for credential patterns
+        run: |
+          if git grep -nIE '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16})' -- . ':!SECURITY.md' ':!src/lib/preflight' ':!.github/workflows'; then
+            echo "::error::Possible credential found in tracked files"
+            exit 1
+          fi
+          echo "No credential patterns in tracked files."
+
+      - name: Ensure no real env file is tracked
+        run: |
+          if git ls-files | grep -E '^\.env' | grep -v '^\.env\.example$'; then
+            echo "::error::A real .env file is tracked"
+            exit 1
+          fi
+          echo "Only .env.example is tracked."

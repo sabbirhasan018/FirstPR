@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-label="FirstPR turns a GitHub username into evidence, a ranked issue, and a preflighted pull request.">
+  <style>
+    .ink { fill: #16192a; }
+    .mut { fill: #5a5f74; }
+    text { font-family: "Segoe UI", Helvetica, Arial, sans-serif; }
+    .h { font-weight: 800; font-size: 19px; }
+    .s { font-weight: 600; font-size: 12.5px; }
+    .w { font-weight: 900; font-size: 30px; }
+    .card, .arrow, .pill { opacity: 0; animation: in .5s ease forwards; }
+    .c1 { animation-delay: .25s } .c2 { animation-delay: .95s }
+    .c3 { animation-delay: 1.65s } .c4 { animation-delay: 2.35s }
+    .a1 { animation-delay: .75s } .a2 { animation-delay: 1.45s } .a3 { animation-delay: 2.15s }
+    .pill { animation-delay: 3.0s }
+    @keyframes in { from { opacity: 0; transform: translate(6px, 8px) } to { opacity: 1; transform: translate(0,0) } }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .arrow, .pill { opacity: 1; animation: none }
+    }
+  </style>
+
+  <rect width="880" height="260" rx="20" fill="#fffaee" stroke="#16192a" stroke-width="5"/>
+
+  <text x="34" y="52" class="w ink">First<tspan fill="#f0455c">PR</tspan></text>
+  <text x="152" y="52" class="s mut">/evidence-backed</text>
+
+  <!-- 1: profile -->
+  <g class="card c1">
+    <rect x="30" y="86" width="180" height="110" rx="8" fill="#e6eefc" stroke="#16192a" stroke-width="4"/>
+    <rect x="36" y="92" width="180" height="110" rx="8" fill="none" stroke="#16192a" stroke-width="0"/>
+    <text x="48" y="122" class="h ink">A username</text>
+    <text x="48" y="147" class="s mut">public repos only</text>
+    <text x="48" y="168" class="s mut">no token needed</text>
+  </g>
+  <g class="arrow a1"><path d="M222 141 h32 m-9-7 l9 7 -9 7" stroke="#16192a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+
+  <!-- 2: evidence -->
+  <g class="card c2">
+    <rect x="266" y="86" width="180" height="110" rx="8" fill="#fdf0d5" stroke="#16192a" stroke-width="4"/>
+    <text x="284" y="122" class="h ink">Evidence</text>
+    <text x="284" y="147" class="s mut">bytes, manifests, CI</text>
+    <text x="284" y="168" class="s mut">every skill cited</text>
+  </g>
+  <g class="arrow a2"><path d="M458 141 h32 m-9-7 l9 7 -9 7" stroke="#16192a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+
+  <!-- 3: ranked issue -->
+  <g class="card c3">
+    <rect x="502" y="86" width="180" height="110" rx="8" fill="#6fdfa6" stroke="#16192a" stroke-width="4"/>
+    <text x="520" y="122" class="h ink">A ranked issue</text>
+    <text x="520" y="147" class="s ink">scored on repo health</text>
+    <text x="520" y="168" class="s ink">reasons always shown</text>
+  </g>
+  <g class="arrow a3"><path d="M694 141 h32 m-9-7 l9 7 -9 7" stroke="#16192a" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+
+  <!-- 4: preflight -->
+  <g class="card c4">
+    <rect x="738" y="86" width="112" height="110" rx="8" fill="#f6b25f" stroke="#16192a" stroke-width="4"/>
+    <text x="756" y="122" class="h ink">Preflight</text>
+    <text x="756" y="147" class="s ink">12 checks</text>
+    <text x="756" y="168" class="s ink">before you</text>
+    <text x="756" y="186" class="s ink">open the PR</text>
+  </g>
+
+  <g class="pill">
+    <rect x="30" y="214" width="356" height="30" rx="6" fill="#fdf0d5" stroke="#16192a" stroke-width="3"/>
+    <text x="44" y="234" class="s ink">Deterministic scoring. No language model in the loop.</text>
+  </g>
+</svg>

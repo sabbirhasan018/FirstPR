@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+/*
+ * FirstPR visual system: neo-brutalist, paper-like. Thick dark outlines, hard
+ * offset shadows, no blur and no gradients. Everything below is driven by the
+ * tokens in :root so a component never hard-codes a colour or a border width.
+ */
+:root {
+  --background: #fffaee;
+  --surface: #fdf0d5;
+  --surface-alt: #fff7e4;
+  --ink: #16192a;
+  --muted: #5a5f74;
+  --input: #e6eefc;
+  --input-placeholder: #8d9ab5;
+  --primary: #f6b25f;
+  --accent: #f0455c;
+  --positive: #6fdfa6;
+  --warn: #ffd166;
+
+  --border-width: 3px;
+  --border-width-lg: 4px;
+  --radius-panel: 20px;
+  --radius-control: 6px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-ink: var(--ink);
+  --color-foreground: var(--ink);
+  --color-muted: var(--muted);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-positive: var(--positive);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-figtree);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+}
+
+@layer components {
+  /* The large form/content panel: the visual anchor of every page. */
+  .nb-panel {
+    background: var(--surface);
+    border: var(--border-width-lg) solid var(--ink);
+    border-radius: var(--radius-panel);
+    box-shadow: 7px 9px 0 var(--ink);
+  }
+
+  /* Result items. Same language, dialled down so a list of them stays calm. */
+  .nb-card {
+    background: var(--surface-alt);
+    border: var(--border-width) solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 4px 5px 0 var(--ink);
+  }
+
+  .nb-card-flat {
+    background: var(--surface-alt);
+    border: var(--border-width) solid var(--ink);
+    border-radius: 12px;
+  }
+
+  .nb-dashed {
+    border: var(--border-width) dashed var(--ink);
+    border-radius: 12px;
+  }
+
+  .nb-input {
+    width: 100%;
+    background: var(--input);
+    color: var(--ink);
+    border: var(--border-width) solid var(--ink);
+    border-radius: var(--radius-control);
+    box-shadow: 4px 5px 0 var(--ink);
+    padding: 0.9rem 0.95rem;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+  }
+
+  .nb-input::placeholder {
+    color: var(--input-placeholder);
+    font-weight: 500;
+  }
+
+  .nb-input:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 4px 5px 0 var(--accent);
+  }
+
+  .nb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: var(--ink);
+    border: var(--border-width-lg) solid var(--ink);
+    border-radius: var(--radius-control);
+    box-shadow: 5px 6px 0 var(--ink);
+    padding: 0.8rem 1.25rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: transform 80ms ease, box-shadow 80ms ease;
+  }
+
+  .nb-btn:active:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 3px 0 var(--ink);
+  }
+
+  .nb-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .nb-btn:focus-visible {
+    outline: var(--border-width) solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Secondary action: same geometry, quieter fill. */
+  .nb-btn-quiet {
+    background: var(--surface-alt);
+    border-width: var(--border-width);
+    box-shadow: 4px 5px 0 var(--ink);
+    font-size: 0.95rem;
+    padding: 0.55rem 0.9rem;
+  }
+
+  .nb-btn-accent {
+    background: var(--accent);
+    color: var(--background);
+  }
+
+  /* Label chips: status, skills, issue labels. */
+  .nb-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--surface-alt);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    padding: 0.1rem 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .nb-chip-positive { background: var(--positive); }
+  .nb-chip-warn { background: var(--warn); }
+  .nb-chip-danger { background: var(--accent); color: var(--background); }
+  .nb-chip-mute { background: var(--input); }
+
+  /* Checkbox: large enough to hit on a phone, drawn rather than native. */
+  .nb-check {
+    appearance: none;
+    flex: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: var(--surface-alt);
+    border: var(--border-width) solid var(--ink);
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+  }
+
+  .nb-check:checked {
+    background: var(--positive);
+  }
+
+  .nb-check:checked::after {
+    content: "";
+    display: block;
+    width: 0.4rem;
+    height: 0.8rem;
+    margin: 0.05rem auto 0;
+    border: solid var(--ink);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
+  .nb-check:focus-visible {
+    outline: var(--border-width) solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Progress/meter bar, e.g. import-graph edge weights. */
+  .nb-meter {
+    height: 0.9rem;
+    background: var(--surface);
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .nb-meter > span {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .nb-link {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--accent);
+  }
+
+  .nb-link:hover {
+    background: var(--primary);
+  }
+}
